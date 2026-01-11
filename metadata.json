@@ -1,0 +1,7 @@
+{
+  "name": "estarp - Logic meets Motion",
+  "description": "A high-end dynamic portfolio for estarp, showcasing the intersection of Web Development, Prompt Engineering, and Motion Graphics with a futuristic minimalist aesthetic.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
