@@ -19,3 +19,8 @@ export interface PromptExample {
   logic: string;
   output: string;
 }
+
+export interface AdminState {
+  isLoggedIn: boolean;
+  showModal: boolean;
+}
