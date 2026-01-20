@@ -10,9 +10,9 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 overflow-hidden">
       <div className="z-10 text-center max-w-5xl">
-        <div className="inline-block px-4 py-1 rounded-full border border-current opacity-20 text-[10px] tracking-[0.2em] uppercase mb-8 animate-float font-bold">
+        /*<div className="inline-block px-4 py-1 rounded-full border border-current opacity-20 text-[10px] tracking-[0.2em] uppercase mb-8 animate-float font-bold">
           High-Performance Architecture & Immersive Experiences
-        </div>
+        </div>*/
 
         <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter leading-[0.9] mb-8">
           The Future of Web <br />
