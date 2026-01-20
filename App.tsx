@@ -100,7 +100,7 @@ const App: React.FC = () => {
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">GitHub</a>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">Twitter</a>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">LinkedIn</a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">Instagram</a>
+            <a href="https://www.instagram.com/victordepraste/" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">Instagram</a>
           </div>
           
           <button 
