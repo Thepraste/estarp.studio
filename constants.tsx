@@ -1,95 +1,85 @@
 
-import { Project, PromptExample } from './types';
+import { Project } from './types';
 
-export const COLORS = {
-  dev: '#00F2FF',
-  creative: '#BF00FF',
-  bg: '#050505',
-  glass: 'rgba(255, 255, 255, 0.03)',
+export const THEME_COLORS = {
+  dark: {
+    accent: '#00F2FF',
+    bg: '#050505',
+    text: '#ffffff',
+    glass: 'rgba(255, 255, 255, 0.03)',
+    border: 'rgba(255, 255, 255, 0.1)',
+  },
+  light: {
+    accent: '#0066FF',
+    bg: '#ffffff',
+    text: '#111111',
+    glass: 'rgba(0, 0, 0, 0.03)',
+    border: 'rgba(0, 0, 0, 0.05)',
+  }
 };
 
 export const PROJECTS: Project[] = [
   {
     id: '1',
-    title: 'Nexus OS Interface',
-    category: 'web',
-    mode: 'developer',
-    thumbnail: 'https://picsum.photos/seed/web1/800/600',
-    description: 'A React-based operating system simulation with complex state management.',
-    tags: ['React', 'Tailwind', 'Framer Motion'],
+    title: 'Vortex ERP System',
+    thumbnail: 'https://images.unsplash.com/photo-1551288049-bbda48658a7d?auto=format&fit=crop&q=80&w=800',
+    description: 'A massive internal resource planning tool with real-time data sync.',
+    tags: ['React', 'PostgreSQL', 'AWS'],
   },
   {
     id: '2',
-    title: 'Cyberpunk Vision Reel',
-    category: 'video',
-    mode: 'creative',
-    thumbnail: 'https://picsum.photos/seed/vid1/800/600',
-    videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    description: 'High-energy edit featuring complex 3D tracking and VFX.',
-    tags: ['After Effects', 'Cinema 4D', 'Premiere'],
+    title: 'Lumina Fashion Store',
+    thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800',
+    description: 'High-end streetwear platform with custom 3D garment visualization.',
+    tags: ['Next.js', 'Three.js', 'Stripe'],
   },
   {
     id: '3',
-    title: 'LLM Orchestration Layer',
-    category: 'prompt',
-    mode: 'developer',
-    thumbnail: 'https://picsum.photos/seed/prompt1/800/600',
-    description: 'Custom Python middleware for multi-agent LLM coordination.',
-    tags: ['Python', 'OpenAI', 'LangChain'],
+    title: 'Aether Crypto Dashboard',
+    thumbnail: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=800',
+    description: 'Secure wallet tracking and DEX aggregator interface.',
+    tags: ['Solidity', 'Ethers.js', 'Tailwind'],
   },
   {
     id: '4',
-    title: 'Neon Brand Identity',
-    category: 'graphics',
-    mode: 'creative',
-    thumbnail: 'https://picsum.photos/seed/graph1/800/600',
-    description: 'Complete visual system for a futuristic tech startup.',
-    tags: ['Illustrator', 'Typography', 'Branding'],
-  },
-  {
-    id: '5',
-    title: 'Interactive Data Mesh',
-    category: 'web',
-    mode: 'developer',
-    thumbnail: 'https://picsum.photos/seed/web2/800/600',
-    description: 'Real-time D3.js visualization of global network traffic.',
-    tags: ['D3.js', 'TypeScript', 'WebGL'],
-  },
-  {
-    id: '6',
-    title: 'Abstract Motion Loops',
-    category: 'video',
-    mode: 'creative',
-    thumbnail: 'https://picsum.photos/seed/vid2/800/600',
-    description: 'A series of 3D loops exploring fluid dynamics and light.',
-    tags: ['Houdini', 'Redshift', 'Octane'],
-  },
-];
-
-export const PROMPT_EXAMPLES: PromptExample[] = [
-  {
-    id: 'p1',
-    label: 'Creative Storytelling',
-    input: 'Write a story about a robot.',
-    logic: 'Chain-of-thought engineering with specific stylistic constraints and character depth anchors.',
-    output: 'System: Act as a high-concept sci-fi novelist. [Constraint: Zero clichés]. [Anchor: Emotional decay]. Result: The clockwork heart of Unit-74 didn’t break; it simply ran out of meaningful seconds...',
-  },
-  {
-    id: 'p2',
-    label: 'Workflow Automation',
-    input: 'Summarize these emails.',
-    logic: 'Recursive summarization with action-item extraction and urgency scoring logic.',
-    output: 'Processing 45 nodes... Identified 3 critical bottlenecks. Actionable: Update Jira #402, Schedule sync with DevOps. Sentiment: Neutral-to-Urgent.',
+    title: 'Pulse SaaS Analytics',
+    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+    description: 'Marketing automation dashboard with focus on micro-interactions.',
+    tags: ['Framer Motion', 'D3.js', 'TypeScript'],
   }
 ];
 
 export const TECH_STACK = [
-  { name: 'React', level: 95, category: 'dev' },
-  { name: 'TypeScript', level: 90, category: 'dev' },
-  { name: 'Next.js', level: 85, category: 'dev' },
-  { name: 'Python', level: 80, category: 'dev' },
-  { name: 'After Effects', level: 95, category: 'creative' },
-  { name: 'Premiere Pro', level: 90, category: 'creative' },
-  { name: 'Photoshop', level: 85, category: 'creative' },
-  { name: 'Blender', level: 75, category: 'creative' },
+  { name: 'Fullstack Dev', level: 98 },
+  { name: 'Cloud Arch', level: 92 },
+  { name: 'Cybersecurity', level: 85 },
+  { name: 'AI Integration', level: 90 },
+  { name: 'UI/UX Design', level: 95 },
+  { name: 'Motion Design', level: 90 },
+  { name: 'Brand Strategy', level: 88 },
+  { name: '3D WebGL', level: 82 },
+];
+
+export const PROMPT_EXAMPLES = [
+  {
+    id: '1',
+    label: 'Scalable Architecture',
+    logic: 'Applying microservices decomposition and horizontal scaling heuristics.',
+    input: 'Design a system that can handle 1M concurrent users for a global fintech platform.',
+    output: 'Implementing a k8s cluster with multi-region replication, Redis for state caching, and Kafka for event-driven asynchronous processing...'
+  },
+  {
+    id: '2',
+    label: 'Brand Identity',
+    logic: 'Synthesizing cyberpunk aesthetics with minimalist structural design.',
+    input: 'Create a visual language for a futuristic design studio called "estarp techies".',
+    output: 'Primary palette: #00F2FF (Neon Cyan) and #0066FF (Tech Blue). Using high-contrast typography and translucent glassmorphism textures...'
+  },
+  {
+    id: '3',
+    label: 'AI Model Tuning',
+    logic: 'Optimizing context windows and instruction-tuning for domain-specific tasks.',
+    input: 'Fine-tune a large language model to behave as a technical architect.',
+    output: 'System Instruction: "You are a world-class senior software engineer...". Applying Chain-of-Thought prompting to improve reasoning on complex codebases...'
+  }
 ];

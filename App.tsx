@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { AppMode, Project } from './types';
+import { ThemeMode, Project, AdminUser } from './types';
 import { PROJECTS as INITIAL_PROJECTS } from './constants';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -12,83 +12,106 @@ import ParticleMesh from './components/ParticleMesh';
 import AdminDashboard from './components/AdminDashboard';
 
 const App: React.FC = () => {
-  const [mode, setMode] = useState<AppMode>('developer');
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    const saved = localStorage.getItem('estarp_theme');
+    return (saved as ThemeMode) || 'light';
+  });
   const [showAdmin, setShowAdmin] = useState(false);
   
-  // Dynamic Projects State with Persistence
   const [projects, setProjects] = useState<Project[]>(() => {
     const saved = localStorage.getItem('estarp_projects');
     return saved ? JSON.parse(saved) : INITIAL_PROJECTS;
+  });
+
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>(() => {
+    const saved = localStorage.getItem('estarp_admin_users');
+    if (saved) return JSON.parse(saved);
+    // Seed with initial default user
+    return [{
+      id: 'default',
+      username: 'prasteadmin',
+      password: 'Barbos@0000',
+      createdAt: new Date().toISOString()
+    }];
   });
 
   useEffect(() => {
     localStorage.setItem('estarp_projects', JSON.stringify(projects));
   }, [projects]);
 
-  // Handle mode-based global styles
   useEffect(() => {
-    document.documentElement.style.setProperty('--accent-color', mode === 'developer' ? '#00F2FF' : '#BF00FF');
-    const root = document.getElementById('root');
-    if (root) {
-      root.classList.add('opacity-0');
-      setTimeout(() => {
-        root.classList.remove('opacity-0');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 300);
-    }
-  }, [mode]);
+    localStorage.setItem('estarp_admin_users', JSON.stringify(adminUsers));
+  }, [adminUsers]);
+
+  useEffect(() => {
+    localStorage.setItem('estarp_theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    // Apply accent color as CSS variable for components to consume
+    const accent = theme === 'dark' ? '#00F2FF' : '#0066FF';
+    document.documentElement.style.setProperty('--accent-color', accent);
+    document.documentElement.style.setProperty('--bg-color', theme === 'dark' ? '#050505' : '#ffffff');
+    document.documentElement.style.setProperty('--text-color', theme === 'dark' ? '#ffffff' : '#111111');
+    document.documentElement.style.setProperty('--glass-bg', theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.7)');
+    document.documentElement.style.setProperty('--border-color', theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)');
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
   return (
-    <div className="relative selection:bg-white/20 transition-opacity duration-300">
-      <ParticleMesh mode={mode} />
+    <div className="relative selection:bg-current selection:text-white transition-opacity duration-300 mode-transition">
+      <ParticleMesh theme={theme} />
 
-      <Navbar mode={mode} setMode={setMode} />
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
 
       <main className="relative z-10">
-        <Hero mode={mode} />
+        <Hero theme={theme} />
 
         <div className="space-y-0">
-          <ProjectGallery mode={mode} projects={projects} />
+          <ProjectGallery theme={theme} projects={projects} />
           
-          <PromptLab mode={mode} />
+          <PromptLab theme={theme} />
 
-          <TechStack mode={mode} />
+          <TechStack theme={theme} />
           
-          <Contact mode={mode} />
+          <Contact theme={theme} />
         </div>
       </main>
 
       {showAdmin && (
         <AdminDashboard 
-          mode={mode}
+          theme={theme}
           projects={projects}
           setProjects={setProjects}
+          adminUsers={adminUsers}
+          setAdminUsers={setAdminUsers}
           onClose={() => setShowAdmin(false)}
         />
       )}
 
-      <footer className="py-20 px-6 border-t border-white/5 text-center text-white/20 text-sm glass">
-        <div className="mb-4">
-          <span className="font-bold text-white/40">estarp.studio</span> © {new Date().getFullYear()}
+      <footer className="py-20 px-6 border-t border-current opacity-10 text-center text-sm">
+        <div className="mb-4 opacity-100">
+          <span className="font-bold opacity-100">estarp techies</span> © {new Date().getFullYear()}
         </div>
-        <div className="flex flex-col items-center gap-6 mb-8">
+        <div className="flex flex-col items-center gap-6 mb-8 opacity-100">
           <div className="flex justify-center gap-6">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Twitter</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">GitHub</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">Twitter</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">LinkedIn</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-current transition-colors">Instagram</a>
           </div>
           
-          {/* Admin Toggle Button */}
           <button 
             onClick={() => setShowAdmin(true)} 
-            className="px-4 py-2 border border-white/5 hover:border-white/20 hover:text-white/60 transition-all text-[9px] uppercase tracking-[0.3em] font-mono rounded-lg bg-white/[0.02]"
+            className="px-4 py-2 border border-current opacity-20 hover:opacity-100 transition-all text-[9px] uppercase tracking-[0.3em] font-mono rounded-lg"
           >
-            access
+            access console
           </button>
         </div>
-        <div className="font-mono text-[10px] tracking-widest opacity-30">
-          SYSTEM_ESTARP :: CONNECTION_SECURE :: {mode.toUpperCase()}_ENV_ACTIVE
+        <div className="font-mono text-[10px] tracking-widest opacity-20">
+          SYSTEM_ESTARP_TECHIES :: CONNECTION_SECURE :: {theme.toUpperCase()}_ENV_ACTIVE
         </div>
       </footer>
     </div>

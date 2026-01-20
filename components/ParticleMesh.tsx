@@ -1,13 +1,11 @@
-
 import React, { useEffect, useRef } from 'react';
-import { AppMode } from '../types';
-import { COLORS } from '../constants';
+import { ThemeMode } from '../types';
 
 interface ParticleMeshProps {
-  mode: AppMode;
+  theme: ThemeMode;
 }
 
-const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
+const ParticleMesh: React.FC<ParticleMeshProps> = ({ theme }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -20,8 +18,8 @@ const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
     let animationFrameId: number;
     let particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
     const particleCount = 60;
-    const connectionDistance = 150;
-    let mouse = { x: -100, y: -100 };
+    const connectionDistance = 200;
+    let mouse = { x: -500, y: -500 };
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -35,8 +33,8 @@ const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
           radius: Math.random() * 2,
         });
       }
@@ -44,7 +42,10 @@ const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const color = mode === 'developer' ? COLORS.dev : COLORS.creative;
+      
+      // Determine base colors from theme
+      const accent = theme === 'dark' ? '#00F2FF' : '#0066FF';
+      const baseColor = theme === 'dark' ? '255, 255, 255' : '0, 0, 0';
 
       particles.forEach((p, i) => {
         p.x += p.vx;
@@ -55,7 +56,7 @@ const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = color + '44'; // translucent
+        ctx.fillStyle = `rgba(${baseColor}, 0.1)`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -69,21 +70,23 @@ const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             const opacity = 1 - dist / connectionDistance;
-            ctx.strokeStyle = color + Math.floor(opacity * 40).toString(16).padStart(2, '0');
+            ctx.strokeStyle = `rgba(${baseColor}, ${opacity * 0.05})`;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
 
-        // Mouse connection
+        // Mouse connection to accentuate theme
         const dxm = p.x - mouse.x;
         const dym = p.y - mouse.y;
         const distm = Math.sqrt(dxm * dxm + dym * dym);
-        if (distm < 200) {
+        if (distm < 250) {
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);
-          const opacity = 1 - distm / 200;
-          ctx.strokeStyle = color + Math.floor(opacity * 80).toString(16).padStart(2, '0');
+          const opacity = 1 - distm / 250;
+          ctx.strokeStyle = accent + Math.floor(opacity * 30).toString(16).padStart(2, '0');
+          ctx.lineWidth = opacity * 1;
           ctx.stroke();
         }
       });
@@ -106,13 +109,13 @@ const ParticleMesh: React.FC<ParticleMeshProps> = ({ mode }) => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [mode]);
+  }, [theme]);
 
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.4 }}
+      style={{ opacity: 0.8 }}
     />
   );
 };

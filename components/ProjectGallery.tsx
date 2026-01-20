@@ -1,93 +1,57 @@
 
-import React, { useState } from 'react';
-import { AppMode, Project } from '../types';
+import React from 'react';
+import { ThemeMode, Project } from '../types';
 
 interface ProjectGalleryProps {
-  mode: AppMode;
+  theme: ThemeMode;
   projects: Project[];
 }
 
-const ProjectGallery: React.FC<ProjectGalleryProps> = ({ mode, projects }) => {
-  const [filter, setFilter] = useState<'all' | 'web' | 'video' | 'graphics' | 'prompt'>('all');
-
-  const filteredProjects = projects.filter(p => {
-    const matchesFilter = filter === 'all' || p.category === filter;
-    const matchesMode = p.mode === mode;
-    return matchesFilter && matchesMode;
-  });
-
-  const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'web', label: 'Web Dev' },
-    { id: 'video', label: 'Motion' },
-    { id: 'graphics', label: 'Design' },
-    { id: 'prompt', label: 'AI/Prompt' },
-  ];
-
+const ProjectGallery: React.FC<ProjectGalleryProps> = ({ theme, projects }) => {
   return (
     <section id="work" className="py-32 px-6 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
         <div>
-          <h2 className="text-4xl font-bold mb-4 tracking-tight">Showcased Work</h2>
-          <p className="text-white/40 max-w-md">A curated collection of projects where logic and aesthetics collide.</p>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id as any)}
-              className={`px-5 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${
-                filter === cat.id
-                  ? (mode === 'developer' ? 'bg-[#00F2FF]/20 border-[#00F2FF] text-[#00F2FF]' : 'bg-[#BF00FF]/20 border-[#BF00FF] text-[#BF00FF]')
-                  : 'border-white/10 text-white/60 hover:border-white/30'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+          <h2 className="text-5xl font-extrabold mb-4 tracking-tight">Portfolio</h2>
+          <p className="opacity-40 max-w-md">Driven digital transformations and custom engineering solutions.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProjects.map((project) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        {projects.map((project) => (
           <div
             key={project.id}
-            className="group relative glass rounded-2xl overflow-hidden cursor-pointer"
+            className="group relative glass rounded-[2rem] overflow-hidden cursor-pointer"
           >
-            <div className="aspect-[4/3] overflow-hidden">
+            <div className="aspect-[16/9] overflow-hidden bg-black/5 dark:bg-white/5">
               <img
                 src={project.thumbnail}
                 alt={project.title}
-                className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
+                className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
               />
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-              <div className="flex gap-2 mb-3">
+            <div className="p-10">
+              <div className="flex gap-2 mb-4">
                 {project.tags.map(tag => (
-                  <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full border border-white/20 bg-black/40 text-white/80">
+                  <span key={tag} className="text-[10px] px-3 py-1 rounded-lg border border-current opacity-20 uppercase tracking-widest font-bold">
                     {tag}
                   </span>
                 ))}
               </div>
-              <h3 className="text-xl font-bold mb-1">{project.title}</h3>
-              <p className="text-sm text-white/60 leading-tight">{project.description}</p>
-            </div>
-
-            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-               <div className={`w-10 h-10 rounded-full flex items-center justify-center glass ${mode === 'developer' ? 'text-[#00F2FF]' : 'text-[#BF00FF]'}`}>
-                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-               </div>
+              <h3 className="text-3xl font-bold mb-3">{project.title}</h3>
+              <p className="opacity-50 leading-relaxed mb-6">{project.description}</p>
+              
+              <div 
+                className="flex items-center gap-2 text-sm font-bold group-hover:translate-x-2 transition-transform" 
+                style={{ color: 'var(--accent-color)' }}
+              >
+                View Project Details 
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
             </div>
           </div>
         ))}
-
-        {filteredProjects.length === 0 && (
-          <div className="col-span-full py-20 text-center glass rounded-2xl">
-            <p className="text-white/40 italic">Switch to '{mode === 'developer' ? 'Creative' : 'Developer'}' mode or add more projects in this category via Admin.</p>
-          </div>
-        )}
       </div>
     </section>
   );

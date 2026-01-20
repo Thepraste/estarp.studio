@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
-import { AppMode } from '../types';
+import { ThemeMode } from '../types';
 
 interface ContactProps {
-  mode: AppMode;
+  theme: ThemeMode;
 }
 
-const Contact: React.FC<ContactProps> = ({ mode }) => {
+const Contact: React.FC<ContactProps> = ({ theme }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,77 +14,66 @@ const Contact: React.FC<ContactProps> = ({ mode }) => {
     message: ''
   });
 
-  const isDev = mode === 'developer';
-  const accentColor = isDev ? '#00F2FF' : '#BF00FF';
-
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:otivictorp@gmail.com?subject=${encodeURIComponent(formData.subject || 'Inquiry from estarp.studio')}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)}`;
+    if (!formData.name || !formData.email) return alert('Please provide your identity credentials.');
+    const mailtoLink = `mailto:estarptechies@gmail.com?subject=${encodeURIComponent(formData.subject || 'Project Brief: estarp.dev')}&body=${encodeURIComponent(`Client: ${formData.name}\nContact: ${formData.email}\n\nBrief:\n${formData.message}`)}`;
     window.location.href = mailtoLink;
   };
 
   const handleWhatsAppSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const whatsappMsg = `*Inquiry from estarp.studio*\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n*Subject:* ${formData.subject}\n\n*Message:*\n${formData.message}`;
+    if (!formData.name) return alert('Identity identification required.');
+    const whatsappMsg = `*Project Brief: estarp.dev*\n\n*Client:* ${formData.name}\n*Email:* ${formData.email}\n*Subject:* ${formData.subject}\n\n*Brief:*\n${formData.message}`;
     const waLink = `https://wa.me/2348180722926?text=${encodeURIComponent(whatsappMsg)}`;
     window.open(waLink, '_blank');
   };
 
   return (
     <section id="contact" className="py-32 px-6 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         <div>
-          <h2 className="text-5xl font-extrabold mb-6 tracking-tighter">
-            Initialize <span className={isDev ? 'gradient-text-dev' : 'gradient-text-creative'}>Communication</span>.
+          <h2 className="text-6xl font-extrabold mb-8 tracking-tighter leading-none">
+            Scale Your <br />
+            <span className="gradient-text">Business</span> Now.
           </h2>
-          <p className="text-white/60 text-lg mb-12 max-w-md leading-relaxed">
-            Ready to deploy your next vision? Whether it's a technical architecture or a high-energy visual campaign, I am ready to collaborate.
+          <p className="opacity-40 text-xl mb-12 max-w-lg leading-relaxed font-light">
+            We are currently accepting new high-impact projects. Our team is ready to audit your current stack and propose a futuristic solution.
           </p>
           
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 group cursor-pointer">
-              <div className="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Email Protocol</p>
-                <p className="text-white/80 font-medium">otivictorp@gmail.com</p>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="p-6 glass rounded-2xl border-l-4" style={{ borderColor: 'var(--accent-color)' }}>
+              <p className="text-[10px] uppercase tracking-[0.3em] opacity-40 font-bold mb-2">Technical HQ</p>
+              <p className="opacity-80 font-medium">estarptechies@gmail.com</p>
             </div>
-
-            <div className="flex items-center gap-4 group cursor-pointer">
-              <div className="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Neural Link (WhatsApp)</p>
-                <p className="text-white/80 font-medium">+234 818 072 2926</p>
-              </div>
+            <div className="p-6 glass rounded-2xl border-l-4" style={{ borderColor: 'var(--accent-color)' }}>
+              <p className="text-[10px] uppercase tracking-[0.3em] opacity-40 font-bold mb-2">Instant Hotline</p>
+              <p className="opacity-80 font-medium">+234 818 072 2926</p>
             </div>
           </div>
         </div>
 
-        <div className="glass p-10 rounded-[2.5rem] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 blur-[100px] opacity-10 pointer-events-none" style={{ backgroundColor: accentColor }} />
+        <div className="glass p-12 rounded-[3.5rem] relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 blur-[150px] opacity-10 pointer-events-none" style={{ backgroundColor: 'var(--accent-color)' }} />
           
           <form className="space-y-6 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Identity</label>
+                <label className="text-[10px] uppercase tracking-widest font-bold opacity-30 ml-2">Full Identity</label>
                 <input 
                   type="text" 
-                  placeholder="Your Name"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors text-white"
+                  placeholder="John Doe"
+                  className="w-full bg-current opacity-5 border-none rounded-2xl px-5 py-4 focus:outline-none transition-colors"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Coordinate</label>
+                <label className="text-[10px] uppercase tracking-widest font-bold opacity-30 ml-2">Digital Coordinate</label>
                 <input 
                   type="email" 
-                  placeholder="Your Email"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors text-white"
+                  placeholder="john@example.com"
+                  className="w-full bg-current opacity-5 border-none rounded-2xl px-5 py-4 focus:outline-none transition-colors"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />
@@ -92,39 +81,40 @@ const Contact: React.FC<ContactProps> = ({ mode }) => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Subject</label>
+              <label className="text-[10px] uppercase tracking-widest font-bold opacity-30 ml-2">Project Classification</label>
               <input 
                 type="text" 
-                placeholder="Brief Overview"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors text-white"
+                placeholder="E-commerce Expansion / SaaS Build"
+                className="w-full bg-current opacity-5 border-none rounded-2xl px-5 py-4 focus:outline-none transition-colors"
                 value={formData.subject}
                 onChange={(e) => setFormData({...formData, subject: e.target.value})}
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest font-bold text-white/40 ml-1">Manifesto</label>
+              <label className="text-[10px] uppercase tracking-widest font-bold opacity-30 ml-2">Project Brief</label>
               <textarea 
-                rows={4}
-                placeholder="Details of your project..."
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-white/30 transition-colors text-white resize-none"
+                rows={5}
+                placeholder="Tell us about your goals..."
+                className="w-full bg-current opacity-5 border-none rounded-2xl px-5 py-4 focus:outline-none transition-colors resize-none"
                 value={formData.message}
                 onChange={(e) => setFormData({...formData, message: e.target.value})}
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
               <button 
                 onClick={handleEmailSubmit}
-                className={`w-full py-4 rounded-xl font-bold transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 ${isDev ? 'bg-[#00F2FF] text-black shadow-[0_0_20px_rgba(0,242,255,0.3)]' : 'bg-[#BF00FF] text-white shadow-[0_0_20px_rgba(191,0,255,0.3)]'}`}
+                className="w-full py-5 rounded-2xl font-bold transition-all duration-300 transform hover:scale-[1.02] active:scale-95 text-white shadow-xl"
+                style={{ backgroundColor: 'var(--accent-color)' }}
               >
-                Transmit Email
+                Launch Protocol
               </button>
               <button 
                 onClick={handleWhatsAppSubmit}
-                className="w-full py-4 rounded-xl font-bold border border-white/10 glass transition-all duration-300 transform hover:scale-[1.02] hover:bg-white/10 flex items-center justify-center gap-2"
+                className="w-full py-5 rounded-2xl font-bold border border-current opacity-40 hover:opacity-100 glass transition-all duration-300 transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
               >
-                Instant WhatsApp
+                Instant Link
               </button>
             </div>
           </form>

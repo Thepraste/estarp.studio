@@ -1,23 +1,19 @@
 
-export type AppMode = 'developer' | 'creative';
+export type ThemeMode = 'light' | 'dark';
 
 export interface Project {
   id: string;
   title: string;
-  category: 'web' | 'video' | 'graphics' | 'prompt';
-  mode: AppMode;
   thumbnail: string;
-  videoUrl?: string;
   description: string;
   tags: string[];
 }
 
-export interface PromptExample {
+export interface AdminUser {
   id: string;
-  label: string;
-  input: string;
-  logic: string;
-  output: string;
+  username: string;
+  password: string;
+  createdAt: string;
 }
 
 export interface AdminState {

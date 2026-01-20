@@ -1,57 +1,89 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>estarp | Logic & Motion</title>
+    <title>estarp techies | Logic & Motion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --accent-color: #0066FF;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme='dark'] {
+            --bg-color: #050505;
+            --text-color: #ffffff;
+            --accent-color: #00F2FF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
+
         .font-mono {
             font-family: 'Fira Code', monospace;
         }
+
         .glass {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
         }
-        .gradient-text-dev {
-            background: linear-gradient(to right, #00F2FF, #006AFF);
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent-color), #00C2FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .gradient-text-creative {
-            background: linear-gradient(to right, #BF00FF, #FF00E5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
+
         .animate-float {
             animation: float 4s ease-in-out infinite;
         }
+
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #050505;
+            background: var(--bg-color);
         }
         ::-webkit-scrollbar-thumb {
-            background: #333;
+            background: #e0e0e0;
             border-radius: 10px;
+        }
+
+        .mode-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
         }
     </style>
 <script type="importmap">
